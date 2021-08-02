@@ -1,81 +1,89 @@
 import Head from 'next/head'
+import Link from 'next/link'
+import { useState } from 'react';
+
 
 export default function Home() {
+
+  const [answeredQuestions, setAnsweredQuestions] = useState([]); // Define the hook
+
+  function questionHandler(event) {
+    event.preventDefault();
+    const question = {
+      location: event.target.location.value,
+      min: event.target.min.value,
+      max: event.target.max.value,
+      avg: event.target.avg.value,
+    }
+
+    setAnsweredQuestions([...answeredQuestions, question]); // Push the new question to the previous state
+    // setReply(randomReply); // set the state of the hook
+  }
+
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
+    <div className="">
       <Head>
-        <title>Create Next App</title>
+        <title>Cookie Stand Admin</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-        <h1 className="text-6xl font-bold">
-          Welcome to{' '}
-          <a className="text-blue-600" href="https://nextjs.org">
-            Next.js!
-          </a>
-        </h1>
+      <header className=" font-serif flex justify-between bg-green-500 text-gray-100 p-3.5 items-center">
+        <h1 className="text-4xl text-black">Cookie Stand Admin</h1>
+      </header>
 
-        <p className="mt-3 text-2xl">
-          Get started by editing{' '}
-          <code className="p-3 font-mono text-lg bg-gray-100 rounded-md">
-            pages/index.js
-          </code>
+
+      <main className="">
+        <form className=" justify-items-center font-serif bg-green-300 text-black flex  bg-gray-200 mx-auto my-4 p-10 mt-8 rounded-2xl w-3/4 " onSubmit={questionHandler}>
+          <h2 className="   -my-7 text-right text-xl ">create cookies stand </h2>
+
+          <div className=" w-3/4  mx-auto my-4   ">
+            <label className="">Location    <input className="flex-auto p-1  rounded-md b-5" type="text" name="location" placeholder="location" /> </label>
+            <br></br>
+            <br></br>
+
+            <label>Minimum Customers per Hour    <input className="flex-auto p-1  rounded-md b-5" type="number" name="min" placeholder="Minimum Customers per Hour" /></label>
+            <br></br>
+            <br></br>
+            <label>Maximum Customers per Hour    <input className="flex-auto p-1 rounded-md b-5" type="number" name="max" placeholder="Maximum Customers per Hour" /></label>
+            <br></br>
+            <br></br>
+            <label>Averge Cookies per sale    <input className="flex-auto p-1  rounded-md b-5" type="number" step="0.01" name="avg" placeholder="Averge Cookies per sale" /></label>
+            <br></br>
+            <br></br>
+            <button className="p-2 bg-green-700 rounded-md  w-44 -mx-0.5">Create</button>
+          </div>
+
+        </form>
+
+        <p className="text-black  text-center mb-20">Report Table Coming Soon ...
+          <br></br>
+          <Link href="/Reports" className="items-center hover:bg-green-700">
+            <a className="text-green-500 hover:bg-green-700 text-black  items-center mb-20">Reports</a>
+          </Link>
+          <div>
+            {
+              answeredQuestions.map(item => {
+                return (
+
+                  //  <h3> 'location' : {item.location} , 'minCustomrs' : {item.min},  'maxCustomrs' :  {item.max} ,  'AvgCustomrs' : {item.avg} </h3>
+                  <h2 className="text-center">{JSON.stringify(item)}</h2>
+                )
+              })
+            }
+
+          </div>
         </p>
 
-        <div className="flex flex-wrap items-center justify-around max-w-4xl mt-6 sm:w-full">
-          <a
-            href="https://nextjs.org/docs"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Find in-depth information about Next.js features and API.
-            </p>
-          </a>
 
-          <a
-            href="https://nextjs.org/learn"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Learn &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Learn about Next.js in an interactive course with quizzes!
-            </p>
-          </a>
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Examples &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Discover and deploy boilerplate example Next.js projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Deploy &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
       </main>
 
-      <footer className="flex items-center justify-center w-full h-24 border-t">
-        <a
-          className="flex items-center justify-center"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="h-4 ml-2" />
-        </a>
+
+      <footer className=" text-black font-serif flex justify-between bg-green-500 text-gray-100 p-2 items-center">
+        ©2021
+
+
       </footer>
     </div>
   )

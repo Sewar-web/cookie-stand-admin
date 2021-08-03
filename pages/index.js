@@ -1,27 +1,47 @@
 import Head from 'next/head'
-import Link from 'next/link'
 import { useState } from 'react';
+import {hours} from '../data.js';
 
+
+import Header from '../components/Header.js';
+import Footer from '../components/Footer.js';
+import QuestionsForm from '../components/QuestionsForm.js';
+import QuestionsTable from '../components/QuestionsTable.js';
+import CreateTable from '../components/CreateTable.js';
 
 export default function Home() {
-
-  const [answeredQuestions, setAnsweredQuestions] = useState([]); // Define the hook
-
-  function questionHandler(event) {
-    event.preventDefault();
-    const question = {
+  
+  function questionHandler(event){
+    event.preventDefault()
+    let cookies = {
       location: event.target.location.value,
-      min: event.target.min.value,
-      max: event.target.max.value,
-      avg: event.target.avg.value,
     }
-
-    setAnsweredQuestions([...answeredQuestions, question]); // Push the new question to the previous state
-    // setReply(randomReply); // set the state of the hook
-
+    let min = Math.floor(event.target.min.value);
+    let max = Math.floor(event.target.max.value);
+    let avg = event.target.avg.value
+    let hour = []
+    let sum = 0
+    for (let i=0; i<=13; i++){
+      let val = Math.floor((Math.random() * (max - min + 1) + min)*avg)
+      hour.push(val)
+      sum+=val
+    }
+    hour.push(sum)
+    cookies['stand'] = hour
+    document.querySelectorAll('input').forEach(element=>{
+      element.value = ''
+    })
+    setLocations([...locations, cookies])
+    SetTotal(total.map(function (value, index) {
+      return value + hour[index];
+    }))
   }
-
-
+  
+  const [answeredQuestions] = useState([]); 
+  
+  const [locations, setLocations] = useState([])
+  const [total, SetTotal] = useState([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0])
+  
   return (
     <div className="font-serif">
       <Head>
@@ -29,60 +49,28 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <header className=" font-serif flex justify-between bg-green-500 text-gray-100 p-3.5 items-center">
-        <h1 className="text-4xl text-black">Cookie Stand Admin</h1>
-      </header>
+      <Header answers={answeredQuestions} title={'Cookie Stand Admin'}/>
 
       <main className=' font-serif '>
+
         <div id='big_container' className='bg-green-400 flex-col flex w-10/12 my-10 p-4  m-auto rounded-md '>
           <h2 className='text-center font-semibold text-2xl' >Create Cookie Stands</h2>
           <br></br>
-          <form onSubmit={questionHandler}>
-            <div className='p-9  mb-4'>
-              <label className='font-medium'>Location </label>
-              <input className=' b-5 w-11/12 bg-gray-200 rounded-md' name='location' required />
-            </div>
-            <div id='bottom_container' className='flex flex-row mx-auto -space-x-1'>
-              <div className='w-1/4'>
-                <label className=' b-5 font-medium'>Minimum Customers per Hour</label>
-                <input name='min' type='number' className='rounded-md b-5 w-10/12' required />
-              </div>
-              <div className='w-1/4'>
-                <label className='font-medium'>Maximum Customers per Hour</label>
-                <input name='max' type='number' className=' b-5 rounded-md w-10/12' required />
-              </div>
-              <div className='w-1/4'>
-                <label className='font-medium'>Average Cookies per Sale</label>
-                <input name='avg' type='float' className=' b-5 rounded-md w-10/12' required />
-              </div>
-              <button className='w-1/6 h-14 bg-green-700 b-5 '>Create</button>
-            </div>
-          </form>
+          
+          <QuestionsForm questionHandler={questionHandler}/>
+
+        
         </div>
-        <p className='text-center text-gray-700 font-semibold '>Report Table Coming Soon...
-          <br></br>
-          <Link href="/Reports" className="items-center hover:bg-green-700 ">
-            <a className="text-green-500 hover:bg-green-700 text-black  items-center mb-20">Reports</a>
-          </Link>
-          <div>
-            {
-              answeredQuestions.map(item => {
-                return (
-
-                  //  <h3> 'location' : {item.location} , 'minCustomrs' : {item.min},  'maxCustomrs' :  {item.max} ,  'AvgCustomrs' : {item.avg} </h3>
-                  <h2 className="text-center">{JSON.stringify(item)}</h2>
-                )
-              })
-            }
-          </div>
-        </p>
+       
+       
+        <QuestionsTable answeredQuestions={answeredQuestions}/>
+        
+        <CreateTable locations={locations} total={total}  />
+      
+      
       </main>
-      <div className="p-20"></div>
-      <footer className=" text-black font-serif flex justify-between bg-green-500  p-2 items-center mb-3 pb-3.5">
-        ©2021
-
-
-      </footer>
+      
+      <Footer answers={answeredQuestions} title={'Cookie Stand Admin'}/>
     </div>
   )
 }

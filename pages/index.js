@@ -18,11 +18,12 @@ export default function Home() {
 
     setAnsweredQuestions([...answeredQuestions, question]); // Push the new question to the previous state
     // setReply(randomReply); // set the state of the hook
+
   }
 
 
   return (
-    <div className="">
+    <div className="font-serif">
       <Head>
         <title>Cookie Stand Admin</title>
         <link rel="icon" href="/favicon.ico" />
@@ -32,33 +33,35 @@ export default function Home() {
         <h1 className="text-4xl text-black">Cookie Stand Admin</h1>
       </header>
 
-
-      <main className="">
-        <form className=" justify-items-center font-serif bg-green-300 text-black flex  bg-gray-200 mx-auto my-4 p-10 mt-8 rounded-2xl w-3/4 " onSubmit={questionHandler}>
-          <h2 className="   -my-7 text-right text-xl ">create cookies stand </h2>
-
-          <div className=" w-3/4  mx-auto my-4   ">
-            <label className="">Location    <input className="flex-auto p-1  rounded-md b-5" type="text" name="location" placeholder="location" /> </label>
-            <br></br>
-            <br></br>
-
-            <label>Minimum Customers per Hour    <input className="flex-auto p-1  rounded-md b-5" type="number" name="min" placeholder="Minimum Customers per Hour" /></label>
-            <br></br>
-            <br></br>
-            <label>Maximum Customers per Hour    <input className="flex-auto p-1 rounded-md b-5" type="number" name="max" placeholder="Maximum Customers per Hour" /></label>
-            <br></br>
-            <br></br>
-            <label>Averge Cookies per sale    <input className="flex-auto p-1  rounded-md b-5" type="number" step="0.01" name="avg" placeholder="Averge Cookies per sale" /></label>
-            <br></br>
-            <br></br>
-            <button className="p-2 bg-green-700 rounded-md  w-44 -mx-0.5">Create</button>
-          </div>
-
-        </form>
-
-        <p className="text-black  text-center mb-20">Report Table Coming Soon ...
+      <main className=' font-serif '>
+        <div id='big_container' className='bg-green-400 flex-col flex w-10/12 my-10 p-4  m-auto rounded-md '>
+          <h2 className='text-center font-semibold text-2xl' >Create Cookie Stands</h2>
           <br></br>
-          <Link href="/Reports" className="items-center hover:bg-green-700">
+          <form onSubmit={questionHandler}>
+            <div className='p-9  mb-4'>
+              <label className='font-medium'>Location </label>
+              <input className=' b-5 w-11/12 bg-gray-200 rounded-md' name='location' required />
+            </div>
+            <div id='bottom_container' className='flex flex-row mx-auto -space-x-1'>
+              <div className='w-1/4'>
+                <label className=' b-5 font-medium'>Minimum Customers per Hour</label>
+                <input name='min' type='number' className='rounded-md b-5 w-10/12' required />
+              </div>
+              <div className='w-1/4'>
+                <label className='font-medium'>Maximum Customers per Hour</label>
+                <input name='max' type='number' className=' b-5 rounded-md w-10/12' required />
+              </div>
+              <div className='w-1/4'>
+                <label className='font-medium'>Average Cookies per Sale</label>
+                <input name='avg' type='float' className=' b-5 rounded-md w-10/12' required />
+              </div>
+              <button className='w-1/6 h-14 bg-green-700 b-5 '>Create</button>
+            </div>
+          </form>
+        </div>
+        <p className='text-center text-gray-700 font-semibold '>Report Table Coming Soon...
+          <br></br>
+          <Link href="/Reports" className="items-center hover:bg-green-700 ">
             <a className="text-green-500 hover:bg-green-700 text-black  items-center mb-20">Reports</a>
           </Link>
           <div>
@@ -71,16 +74,11 @@ export default function Home() {
                 )
               })
             }
-
           </div>
         </p>
-
-
-
       </main>
-
-
-      <footer className=" text-black font-serif flex justify-between bg-green-500 text-gray-100 p-2 items-center">
+      <div className="p-20"></div>
+      <footer className=" text-black font-serif flex justify-between bg-green-500  p-2 items-center mb-3 pb-3.5">
         ©2021
 
 
